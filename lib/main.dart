@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       home: LeaveSearchPage(),
     );
   }
@@ -108,6 +108,7 @@ class _LeaveSearchPageState extends State<LeaveSearchPage> {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(LeaveSearchPageController());
     return GetBuilder<LeaveSearchPageController>(builder: (_) {
       if (!controller.isDataFetched) {
         return const Scaffold(
@@ -128,6 +129,7 @@ class _LeaveSearchPageState extends State<LeaveSearchPage> {
               child: SearchableTextfield(
                   // New Param: whether more data exist on server
                   hasMore: controller.hasMoreData,
+                  pagination: false,
                   // New param: fetching new page for existing query
                   onFetchNextPage: (query, page) async {
                     controller.currentPage = page;
@@ -150,7 +152,6 @@ class _LeaveSearchPageState extends State<LeaveSearchPage> {
                   isLoading: controller.isLoading,
                   // New Param: current running page for the data
                   currentPage: controller.currentPage,
-                  
                   onSubmit: (p0) {
                     // controller.enableFocusOfIthRowJthColumn(
                     //     destinationRow: i, destinationColumn: 1);
